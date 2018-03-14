@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial 2: Plot utilities &mdash; pycroscopy 0.59.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../about.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="pycroscopy 0.59.4 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pycroscopy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.59.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">Pycroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats_new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_format.html">Pycroscopy Data and File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../papers_conferences.html">Papers / Conferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Examples &amp; Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#scientific-data-analysis">Scientific Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#developer-tutorials">Developer Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#user-tutorials">User Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pycroscopy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial 2: Plot utilities</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/auto_publications/plot_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial-2-plot-utilities">
+<span id="sphx-glr-auto-publications-plot-utils-py"></span><h1>Tutorial 2: Plot utilities<a class="headerlink" href="#tutorial-2-plot-utilities" title="Permalink to this headline">¶</a></h1>
+<p><strong>Suhas Somnath</strong>
+10/12/2017</p>
+<p>This is a short walkthrough of useful plotting utilities available in pycroscopy.
+Some of these functions fill gaps in the defult matplotlib package, some were
+developed for scientific applications, and others were developed specifically
+for handling pycroscopy datasets. These functions have been developed to substantially simplify
+the generation of high quality figures for journal publications.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure python 3 compatibility:</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="c1"># plotting utilities and our own pycroscopy:</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pycroscopy</span> <span class="kn">as</span> <span class="nn">px</span>
+</pre></div>
+</div>
+<div class="section" id="d-plot-utilities">
+<h2>1D plot utilities<a class="headerlink" href="#d-plot-utilities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="plot-loops">
+<h3>plot_loops<a class="headerlink" href="#plot-loops" title="Permalink to this headline">¶</a></h3>
+<p>This function is particularly useful when we need to plot a 1D signal acquired at multiple locations.
+The function is rather flexible and can take on several optional arguments that will be alluded to below
+In the below example, we are simply simulating sine waveforms for different frequencies (think of these as
+different locations on a sample)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="c1"># The different frequencies:</span>
+<span class="n">freqs</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="c1"># Generating the signals at the different &quot;positions&quot;</span>
+<span class="n">y_mat</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="View documentation for numpy.array"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">freq</span> <span class="o">*</span> <span class="n">x_vec</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">freqs</span><span class="p">])</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_loops</span><span class="p">(</span><span class="n">x_vec</span><span class="p">,</span> <span class="n">y_mat</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0011.png" class="align-center" src="../_images/sphx_glr_plot_utils_0011.png" />
+<p>Frequently, we may need to compare signals from two different datasets for the same positions
+The same plot_loops function can be used for this purpose even if the signal lengths / resolutions are different</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_vec_1</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">x_vec_2</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="n">freqs</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">y_mat_1</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="View documentation for numpy.array"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">freq</span> <span class="o">*</span> <span class="n">x_vec_1</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">freqs</span><span class="p">])</span>
+<span class="n">y_mat_2</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="View documentation for numpy.array"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.cos.html#numpy.cos" title="View documentation for numpy.cos"><span class="n">np</span><span class="o">.</span><span class="n">cos</span></a><span class="p">(</span><span class="n">freq</span> <span class="o">*</span> <span class="n">x_vec_2</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">freqs</span><span class="p">])</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_loops</span><span class="p">([</span><span class="n">x_vec_1</span><span class="p">,</span> <span class="n">x_vec_2</span><span class="p">],</span> <span class="p">[</span><span class="n">y_mat_1</span><span class="p">,</span> <span class="n">y_mat_2</span><span class="p">],</span>
+                         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Sine and Cosine of different resolutions&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0021.png" class="align-center" src="../_images/sphx_glr_plot_utils_0021.png" />
+</div>
+<div class="section" id="plot-line-family">
+<h3>plot_line_family<a class="headerlink" href="#plot-line-family" title="Permalink to this headline">¶</a></h3>
+<p>Often there is a need to visualize multiple spectra or signals on the same plot. plot_line_family
+is a handy function ideally suited for this purpose and it is highly configurable for different styles and purposes
+A few example applications include visualizing X ray / IR spectra (with y offsets), centroids from clustering
+algorithms</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">freqs</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">y_mat</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="View documentation for numpy.array"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">freq</span> <span class="o">*</span> <span class="n">x_vec</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">freqs</span><span class="p">])</span>
+<span class="n">freq_strs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">freqs</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_line_family</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_vec</span><span class="p">,</span> <span class="n">y_mat</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Basic line family&#39;</span><span class="p">)</span>
+
+<span class="c1"># Option suitable for visualiing spectra with y offsets:</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_line_family</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_vec</span><span class="p">,</span> <span class="n">y_mat</span><span class="p">,</span>
+                               <span class="n">line_names</span><span class="o">=</span><span class="n">freq_strs</span><span class="p">,</span> <span class="n">label_prefix</span><span class="o">=</span><span class="s1">&#39;Freq = &#39;</span><span class="p">,</span> <span class="n">label_suffix</span><span class="o">=</span><span class="s1">&#39;Hz&#39;</span><span class="p">,</span>
+                                 <span class="n">y_offset</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Line family with legend&#39;</span><span class="p">)</span>
+
+<span class="c1"># Option highly suited for visualizing the centroids from a clustering algorithm:</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_line_family</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">x_vec</span><span class="p">,</span> <span class="n">y_mat</span><span class="p">,</span>
+                               <span class="n">line_names</span><span class="o">=</span><span class="n">freq_strs</span><span class="p">,</span> <span class="n">label_prefix</span><span class="o">=</span><span class="s1">&#39;Freq = &#39;</span><span class="p">,</span> <span class="n">label_suffix</span><span class="o">=</span><span class="s1">&#39;Hz&#39;</span><span class="p">,</span>
+                                 <span class="n">y_offset</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">show_cbar</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Line family with colorbar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0031.png" class="align-center" src="../_images/sphx_glr_plot_utils_0031.png" />
+</div>
+<div class="section" id="plot-complex-loop-stack">
+<h3>plot_complex_loop_stack<a class="headerlink" href="#plot-complex-loop-stack" title="Permalink to this headline">¶</a></h3>
+<p>This handy function plots the amplitude and phase components of multiple complex valued spectra
+Here we simulate the signal coming from a simple harmonic oscillator (SHO).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_spectra</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">spectra_length</span> <span class="o">=</span> <span class="mi">77</span>
+<span class="n">w_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="n">spectra_length</span><span class="p">)</span>
+<span class="n">amps</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html#numpy.random.rand" title="View documentation for numpy.random.rand"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span></a><span class="p">(</span><span class="n">num_spectra</span><span class="p">)</span>
+<span class="n">freqs</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html#numpy.random.rand" title="View documentation for numpy.random.rand"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span></a><span class="p">(</span><span class="n">num_spectra</span><span class="p">)</span><span class="o">*</span><span class="mi">35</span> <span class="o">+</span> <span class="mi">310</span>
+<span class="n">q_facs</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html#numpy.random.rand" title="View documentation for numpy.random.rand"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span></a><span class="p">(</span><span class="n">num_spectra</span><span class="p">)</span><span class="o">*</span><span class="mi">25</span> <span class="o">+</span> <span class="mi">50</span>
+<span class="n">phis</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html#numpy.random.rand" title="View documentation for numpy.random.rand"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span></a><span class="p">(</span><span class="n">num_spectra</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">spectra</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html#numpy.zeros" title="View documentation for numpy.zeros"><span class="n">np</span><span class="o">.</span><span class="n">zeros</span></a><span class="p">((</span><span class="n">num_spectra</span><span class="p">,</span> <span class="n">spectra_length</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">amp</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">qfac</span><span class="p">,</span> <span class="n">phase</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_spectra</span><span class="p">),</span> <span class="n">amps</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">q_facs</span><span class="p">,</span> <span class="n">phis</span><span class="p">):</span>
+    <span class="n">spectra</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">be_sho</span><span class="o">.</span><span class="n">SHOfunc</span><span class="p">((</span><span class="n">amp</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">qfac</span><span class="p">,</span> <span class="n">phase</span><span class="p">),</span> <span class="n">w_vec</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_complex_loop_stack</span><span class="p">(</span><span class="n">spectra</span><span class="p">,</span> <span class="n">w_vec</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Oscillator responses&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0041.png" class="align-center" src="../_images/sphx_glr_plot_utils_0041.png" />
+</div>
+<div class="section" id="rainbow-plot">
+<h3>rainbow_plot<a class="headerlink" href="#rainbow-plot" title="Permalink to this headline">¶</a></h3>
+<p>This function is ideally suited for visualizing a signal that varies as a function of time or when
+the directionality of the signal is important</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pts</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">t_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">()</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">rainbow_plot</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.cos.html#numpy.cos" title="View documentation for numpy.cos"><span class="n">np</span><span class="o">.</span><span class="n">cos</span></a><span class="p">(</span><span class="n">t_vec</span><span class="p">)</span><span class="o">*</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">),</span>
+                           <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">t_vec</span><span class="p">)</span><span class="o">*</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">),</span>
+                           <span class="n">num_steps</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0051.png" class="align-center" src="../_images/sphx_glr_plot_utils_0051.png" />
+</div>
+<div class="section" id="cbar-for-line-plot">
+<h3>cbar_for_line_plot<a class="headerlink" href="#cbar-for-line-plot" title="Permalink to this headline">¶</a></h3>
+<p>Note that from the above plot it may not be clear if the signal is radiating outwards or spiraling inwards.
+In these cases it helps to add a colorbar. However, colorbars can typically only be added for 2D images.
+In such cases we can use a handy function: cbar_for_line_plot</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pts</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">t_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">rainbow_plot</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.cos.html#numpy.cos" title="View documentation for numpy.cos"><span class="n">np</span><span class="o">.</span><span class="n">cos</span></a><span class="p">(</span><span class="n">t_vec</span><span class="p">)</span><span class="o">*</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">),</span>
+                           <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">t_vec</span><span class="p">)</span><span class="o">*</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">),</span>
+                           <span class="n">num_steps</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">cbar_for_line_plot</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;Time (sec)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0061.png" class="align-center" src="../_images/sphx_glr_plot_utils_0061.png" />
+</div>
+<div class="section" id="plot-scree">
+<h3>plot_scree<a class="headerlink" href="#plot-scree" title="Permalink to this headline">¶</a></h3>
+<p>One of the results of applying Singular Value Decomposition is the variance or statistical significance
+of the resultant components. This data is best visualized via a log-log plot and plot_scree is available
+exclusively to vvisualizethis kind of data</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scree</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.exp.html#numpy.exp" title="View documentation for numpy.exp"><span class="n">np</span><span class="o">.</span><span class="n">exp</span></a><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html#numpy.arange" title="View documentation for numpy.arange"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_scree</span><span class="p">(</span><span class="n">scree</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0071.png" class="align-center" src="../_images/sphx_glr_plot_utils_0071.png" />
+</div>
+</div>
+<div class="section" id="id1">
+<h2>2D plot utilities<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="colormaps">
+<h3>Colormaps<a class="headerlink" href="#colormaps" title="Permalink to this headline">¶</a></h3>
+<p>pycroscopy has a handful of colormaps suited for different applications.</p>
+<div class="section" id="cmap-jet-white-center">
+<h4>cmap_jet_white_center<a class="headerlink" href="#cmap-jet-white-center" title="Permalink to this headline">¶</a></h4>
+<p>This is the standard jet colormap with a white center instead of green. This is a good colormap for images with
+divergent data (data that diverges slightly both positively and negatively from the mean).
+One example target is the ronchigrams from scanning transmission electron microscopy (STEM)</p>
+</div>
+<div class="section" id="cmap-hot-desaturated">
+<h4>cmap_hot_desaturated<a class="headerlink" href="#cmap-hot-desaturated" title="Permalink to this headline">¶</a></h4>
+<p>This is a desaturated version of the  standard jet colormap</p>
+</div>
+<div class="section" id="discrete-cmap">
+<h4>discrete_cmap<a class="headerlink" href="#discrete-cmap" title="Permalink to this headline">¶</a></h4>
+<p>This function helps create a discretized version of the provided colormap. This is ideally suited when the data
+only contains a few discrete values. One popular application is the visualization of labels from a clustering
+algorithm</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">y_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">x_vec</span><span class="p">)</span>
+
+<span class="n">test</span> <span class="o">=</span> <span class="n">y_vec</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html#numpy.atleast_2d" title="View documentation for numpy.atleast_2d"><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span></a><span class="p">(</span><span class="n">y_vec</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">cmap</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span>
+                             <span class="p">[</span><span class="s1">&#39;Jet&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;Jet with white center&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;Jet desaturated&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;Jet discretized&#39;</span><span class="p">],</span>
+                             <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span>
+                              <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">cmap_jet_white_center</span><span class="p">(),</span>
+                              <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">cmap_hot_desaturated</span><span class="p">(),</span>
+                              <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">discrete_cmap</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)]):</span>
+    <span class="n">im_handle</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.colorbar.html#matplotlib.pyplot.colorbar" title="View documentation for matplotlib.pyplot.colorbar"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><span class="n">im_handle</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+                            <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span> <span class="n">use_gridspec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0081.png" class="align-center" src="../_images/sphx_glr_plot_utils_0081.png" />
+</div>
+</div>
+<div class="section" id="make-linear-alpha-cmap">
+<h3>make_linear_alpha_cmap<a class="headerlink" href="#make-linear-alpha-cmap" title="Permalink to this headline">¶</a></h3>
+<p>On certain occasions we may want to superimpose one image with another. However, this is not possible
+by default since colormaps involve solid colors. This function allows one to plot multiple images using
+a transparent-to-solid colormap. Here we will demonstrate this by plotting blobs representing atomic columns
+over some background intensity.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pts</span> <span class="o">=</span> <span class="mi">256</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">()</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Prepare some backround signal</span>
+<span class="n">x_mat</span><span class="p">,</span> <span class="n">y_mat</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.meshgrid.html#numpy.meshgrid" title="View documentation for numpy.meshgrid"><span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span></a><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">),</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">))</span>
+<span class="n">background_distortion</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_mat</span> <span class="o">+</span> <span class="n">y_mat</span> <span class="o">+</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x_mat</span><span class="p">))</span>
+
+<span class="c1"># plot this signal in grey</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">background_distortion</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+
+<span class="c1"># prepare the signal of interest (think of this as intensities in a HREM dataset)</span>
+<span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span>
+<span class="n">y_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">x_vec</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">atom_intensities</span> <span class="o">=</span> <span class="n">y_vec</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html#numpy.atleast_2d" title="View documentation for numpy.atleast_2d"><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span></a><span class="p">(</span><span class="n">y_vec</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># prepare the transparent-to-solid colormap</span>
+<span class="n">solid_color</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">translucent_colormap</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">make_linear_alpha_cmap</span><span class="p">(</span><span class="s1">&#39;my_map&#39;</span><span class="p">,</span> <span class="n">solid_color</span><span class="p">,</span>
+                                                            <span class="mi">1</span><span class="p">,</span> <span class="n">min_alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># plot the atom intensities using the custom colormap</span>
+<span class="n">im_handle</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">atom_intensities</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">translucent_colormap</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.colorbar.html#matplotlib.pyplot.colorbar" title="View documentation for matplotlib.pyplot.colorbar"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><span class="n">im_handle</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+                        <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span> <span class="n">use_gridspec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0091.png" class="align-center" src="../_images/sphx_glr_plot_utils_0091.png" />
+</div>
+<div class="section" id="plot-map">
+<h3>plot_map<a class="headerlink" href="#plot-map" title="Permalink to this headline">¶</a></h3>
+<p>This function adds several popularly used features to the basic image plotting function in matplotlib including:
+* easy addition of a colorbar
+* easy modification of the x and y tick values
+* clipping the colorbar to N standard deviations of the mean</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">y_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">x_vec</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">atom_intensities</span> <span class="o">=</span> <span class="n">y_vec</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html#numpy.atleast_2d" title="View documentation for numpy.atleast_2d"><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span></a><span class="p">(</span><span class="n">y_vec</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="c1"># Standard imshow plot for reference</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">atom_intensities</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Standard imshow&#39;</span><span class="p">)</span>
+<span class="c1"># Now plot_map with some options enabled:</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_map</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">atom_intensities</span><span class="p">,</span> <span class="n">stdevs</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">num_ticks</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">y_size</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                       <span class="n">cbar_label</span><span class="o">=</span><span class="s1">&#39;intensity (a. u.)&#39;</span><span class="p">,</span> <span class="n">tick_font_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;plot_map&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0101.png" class="align-center" src="../_images/sphx_glr_plot_utils_0101.png" />
+</div>
+<div class="section" id="set-tick-font-size">
+<h3>set_tick_font_size<a class="headerlink" href="#set-tick-font-size" title="Permalink to this headline">¶</a></h3>
+<p>Adjusting the font sizes of the tick marks is often necessary for preparing figures for journal papers.
+However, adjusting the tick sizes is actually tedious in python and this function makes this easier.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html#numpy.random.rand" title="View documentation for numpy.random.rand"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span></a><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="View documentation for matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="s1">&#39;Custom&#39;</span><span class="p">]):</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span> <span class="o">+</span> <span class="s1">&#39; tick size&#39;</span><span class="p">)</span>
+<span class="c1"># only changing the tick font size on the second plot:</span>
+<span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">set_tick_font_size</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0111.png" class="align-center" src="../_images/sphx_glr_plot_utils_0111.png" />
+</div>
+<div class="section" id="plot-map-stack">
+<h3>plot_map_stack<a class="headerlink" href="#plot-map-stack" title="Permalink to this headline">¶</a></h3>
+<p>One of the most popular operations in scientific research is the visualization of a stack of images.
+This function is built specifically for that purpose.
+Here we simply simulate some images using sinusoidal functions for demonstration purposes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_sine_2d_image</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
+    <span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">freq</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+    <span class="n">y_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">x_vec</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">y_vec</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html#numpy.atleast_2d" title="View documentation for numpy.atleast_2d"><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span></a><span class="p">(</span><span class="n">y_vec</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span> <span class="p">,</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+<span class="n">image_stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_sine_2d_image</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">frequencies</span><span class="p">]</span>
+<span class="n">image_stack</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="View documentation for numpy.array"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">(</span><span class="n">image_stack</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_map_stack</span><span class="p">(</span><span class="n">image_stack</span><span class="p">,</span> <span class="n">reverse_dims</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fig_title_yoffset</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0121.png" class="align-center" src="../_images/sphx_glr_plot_utils_0121.png" />
+</div>
+<div class="section" id="plot-complex-map-stack">
+<h3>plot_complex_map_stack<a class="headerlink" href="#plot-complex-map-stack" title="Permalink to this headline">¶</a></h3>
+<p>This function plots the amplitude and phase components of a stack of complex valued 2D images.
+Here we simulate the data using sine and cosine components</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple function to generate images</span>
+<span class="k">def</span> <span class="nf">get_complex_2d_image</span><span class="p">(</span><span class="n">freq</span><span class="p">):</span>
+    <span class="n">x_vec</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html#numpy.linspace" title="View documentation for numpy.linspace"><span class="n">np</span><span class="o">.</span><span class="n">linspace</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">freq</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+    <span class="n">y_vec_1</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.sin.html#numpy.sin" title="View documentation for numpy.sin"><span class="n">np</span><span class="o">.</span><span class="n">sin</span></a><span class="p">(</span><span class="n">x_vec</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">y_vec_2</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.cos.html#numpy.cos" title="View documentation for numpy.cos"><span class="n">np</span><span class="o">.</span><span class="n">cos</span></a><span class="p">(</span><span class="n">x_vec</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">y_vec_2</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html#numpy.atleast_2d" title="View documentation for numpy.atleast_2d"><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span></a><span class="p">(</span><span class="n">y_vec_2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1j</span><span class="o">*</span><span class="p">(</span><span class="n">y_vec_1</span> <span class="o">*</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.atleast_2d.html#numpy.atleast_2d" title="View documentation for numpy.atleast_2d"><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span></a><span class="p">(</span><span class="n">y_vec_1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># The range of frequences over which the images are generated</span>
+<span class="n">frequencies</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html#numpy.arange" title="View documentation for numpy.arange"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">image_stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_complex_2d_image</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">frequencies</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_complex_map_stack</span><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="View documentation for numpy.array"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">(</span><span class="n">image_stack</span><span class="p">))</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_utils_0131.png" class="align-center" src="../_images/sphx_glr_plot_utils_0131.png" />
+</div>
+<div class="section" id="get-cmap-object">
+<h3>get_cmap_object<a class="headerlink" href="#get-cmap-object" title="Permalink to this headline">¶</a></h3>
+<p>This function is useful more for developers writing their own plotting functions that need to manipulate the
+colormap object. This function makes it easy to ensure that you are working on the colormap object and not the
+string name of the colormap (both of which are accepted by most matplotlib functions).
+Here we simply compare the returned values when passing both the colormap object and the string name of the colormap</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">get_cmap_object</span><span class="p">(</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">px</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">get_cmap_object</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  3.032 seconds)</p>
+<div class="sphx-glr-footer docutils container">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" href="../_downloads/plot_utils1.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_utils.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" href="../_downloads/plot_utils1.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_utils.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Suhas Somnath, Chris Smith, Stephen Jesse, Numan Laanait.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.59.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
